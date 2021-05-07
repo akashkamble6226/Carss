@@ -6,16 +6,21 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../models/company_dummy_data.dart';
-import '../models/best_cars.dart';
+
 import '../views/company_details.dart';
 import 'car_details.dart';
+import 'login.dart';
 
 class HomePage extends StatelessWidget {
+  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      key: scaffoldKey,
+      drawer: buildDrawer(context, deviceHeight, deviceWidth),
       appBar: buildAppBar(context),
       body: SingleChildScrollView(
         child: Container(
@@ -41,10 +46,13 @@ class HomePage extends StatelessWidget {
     return AppBar(
       centerTitle: true,
       backgroundColor: Theme.of(context).accentColor,
-      leading: Icon(
-        Icons.menu,
-        size: 22,
-        color: Colors.white,
+      leading: GestureDetector(
+        onTap: () => scaffoldKey.currentState.openDrawer(),
+        child: Icon(
+          Icons.menu,
+          size: 22,
+          color: Colors.white,
+        ),
       ),
       title: Text('Carss', style: Theme.of(context).textTheme.headline1),
       actions: [
@@ -57,6 +65,93 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Drawer buildDrawer(
+      BuildContext context, double deviceHeight, double deviceWidth) {
+    return Drawer(
+      child: Container(
+        color: Theme.of(context).primaryColor,
+        child: Column(
+          children: [
+            Container(
+              height: 150,
+              width: deviceWidth,
+              color: Theme.of(context).accentColor,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Icon(
+                      Icons.account_circle,
+                      color: Colors.white,
+                      size: 50,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Welcome',
+                      style: Theme.of(context).textTheme.headline2,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            ListTile(
+              trailing: Icon(
+                Icons.login,
+                size: 25,
+                color: Colors.white,
+              ),
+              title: Text(
+                'Login',
+                style: Theme.of(context).textTheme.headline3,
+              ),
+              onTap: () {
+                Get.to(LoginPage());
+                // Get.snackbar(
+                //   'Login',
+                //   'you can login',
+                //   snackPosition: SnackPosition.BOTTOM,
+                //   colorText: Colors.white,
+                //   backgroundColor: Theme.of(context).accentColor,
+                // );
+              },
+            ),
+            Divider(
+              thickness: 1,
+              color: Theme.of(context).accentColor,
+            ),
+            ListTile(
+              trailing: Icon(
+                Icons.favorite_border,
+                size: 25,
+                color: Colors.white,
+              ),
+              title: Text(
+                'Favorites',
+                style: Theme.of(context).textTheme.headline3,
+              ),
+              onTap: () {
+                // Get.snackbar(
+                //   'Login',
+                //   'you can login',
+                //   snackPosition: SnackPosition.BOTTOM,
+                //   colorText: Colors.white,
+                //   backgroundColor: Theme.of(context).accentColor,
+                // );
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 
