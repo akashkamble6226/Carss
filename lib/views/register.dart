@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/firebase_controller.dart';
-import '../views/register.dart';
 
-class LoginPage extends GetWidget<FirebaseController> {
+import '../views/login.dart';
+
+
+class Register extends GetWidget<FirebaseController> {
 
   final TextEditingController emailtextEditingController =
       TextEditingController();
@@ -23,39 +25,33 @@ class LoginPage extends GetWidget<FirebaseController> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Login Here',
+                  Text('Registe Here',
                       style: Theme.of(context).textTheme.headline2),
                   SizedBox(
                     height: 50,
                   ),
-                  buildTextField(
+                 buildTextField(
                       'Enter Your Email', context, emailtextEditingController),
                   SizedBox(
                     height: 20,
                   ),
-                  buildTextField(
+               buildTextField(
                       'Mobile Number', context, passwordtextEditingController),
                   SizedBox(
                     height: 40,
                   ),
-                  Text(
-                    'Forgot Password ?',
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  buildButton('Login', context, emailtextEditingController,
+                 
+                buildButton('Register', context, emailtextEditingController,
                       passwordtextEditingController),
                   SizedBox(
                     height: 10,
                   ),
                   GestureDetector(
-                    onTap: (){
-                      Get.to(() =>Register());
+                    onTap: () {
+                       Get.to(() =>LoginPage());
                     },
                                       child: Text(
-                      'Don\'t have an account ? Click to Register.',
+                      'Already have an account ? Click to Login.',
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                   ),
@@ -66,6 +62,8 @@ class LoginPage extends GetWidget<FirebaseController> {
         ),
       ),
     );
+
+
   }
 
   Widget buildTextField(
@@ -128,4 +126,5 @@ class LoginPage extends GetWidget<FirebaseController> {
       ),
     );
   }
-}
+  
+  }

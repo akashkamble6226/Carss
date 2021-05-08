@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "892901543430",
+    "project_id": "carss-15601",
+    "storage_bucket": "carss-15601.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892901543430:android:94d2837984bb1227d57d87",
+        "android_client_info": {
+          "package_name": "com.example.carss"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "892901543430-7u69o3pjbusv78a91nt5d9r4jprdejii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeWjS1Z4k1n-52f31pJoVQmFjjCLpd89w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "892901543430-7u69o3pjbusv78a91nt5d9r4jprdejii.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

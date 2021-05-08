@@ -149,6 +149,31 @@ class HomePage extends StatelessWidget {
                 // );
               },
             ),
+
+            Divider(
+              thickness: 1,
+              color: Theme.of(context).accentColor,
+            ),
+            ListTile(
+              trailing: Icon(
+                Icons.logout,
+                size: 25,
+                color: Colors.white,
+              ),
+              title: Text(
+                'Logout',
+                style: Theme.of(context).textTheme.headline3,
+              ),
+              onTap: () {
+                // Get.snackbar(
+                //   'Login',
+                //   'you can login',
+                //   snackPosition: SnackPosition.BOTTOM,
+                //   colorText: Colors.white,
+                //   backgroundColor: Theme.of(context).accentColor,
+                // );
+              },
+            ),
           ],
         ),
       ),

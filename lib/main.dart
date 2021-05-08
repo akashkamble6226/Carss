@@ -1,18 +1,32 @@
+import 'package:carss/views/login.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import './views/homepage.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+
+import './bindings/firebas_auth_binding.dart';
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+ 
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      initialBinding: FirebaseAuthBinding(),
       color: HexColor('#ffffff'),
       debugShowCheckedModeBanner: false,
       title: 'Carss',
@@ -22,7 +36,6 @@ class MyApp extends StatelessWidget {
         primaryColor: HexColor('#FF7777'),
         //secondary color
         accentColor: HexColor('#FF6161'),
-     
 
         textTheme: TextTheme(
           headline1: TextStyle(
@@ -41,7 +54,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: HomePage(),
+      home: LoginPage(),
     );
   }
 }
