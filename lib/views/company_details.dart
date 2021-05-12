@@ -23,7 +23,6 @@ class ComapnyDetailsPage extends StatelessWidget {
             child: Column(
               children: [
                 Stack(
-                 
                   children: [
                     buildCompanyLogo(),
 
@@ -63,7 +62,6 @@ class ComapnyDetailsPage extends StatelessWidget {
       children: [
         SizedBox(height: 25),
         buildTitleName(context, "Models -"),
-       
         Image.asset(
           companyInfo.modelImage,
           width: width,
@@ -81,19 +79,25 @@ class ComapnyDetailsPage extends StatelessWidget {
         SizedBox(
           height: 50,
         ),
-        ExpandablePanel(
-          header: buildTitleName(context, "Details -"),
-          collapsed: Text(
-            companyInfo.details,
-            style: Theme.of(context).textTheme.headline5,
-            softWrap: true,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+        ExpandableTheme(
+          data: ExpandableThemeData(
+            iconColor: Colors.white,
+            useInkWell: true,
           ),
-          expanded: Text(
-            companyInfo.details,
-            style: Theme.of(context).textTheme.headline5,
-            softWrap: true,
+          child: ExpandablePanel(
+            header: buildTitleName(context, "Details -"),
+            collapsed: Text(
+              companyInfo.details,
+              style: Theme.of(context).textTheme.headline5,
+              softWrap: true,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            expanded: Text(
+              companyInfo.details,
+              style: Theme.of(context).textTheme.headline5,
+              softWrap: true,
+            ),
           ),
         ),
         SizedBox(

@@ -33,7 +33,7 @@ class _CarDetailsState extends State<CarDetails> {
   void initState() {
     // TODO: implement initState
     super.initState();
-  _isVisible = true;
+  _isVisible = false;
     _hideButtonController = new ScrollController();
     _hideButtonController.addListener(() {
       // if (_hideButtonController.position.atEdge) {
@@ -79,7 +79,7 @@ class _CarDetailsState extends State<CarDetails> {
 
     return Scaffold(
       bottomNavigationBar: AnimatedContainer(
-        duration: Duration(milliseconds: 500),
+        duration: Duration(milliseconds: 50),
         height: _isVisible ? 60.0 : 0.0,
         child: BuildGoToStore(
           bestCar: widget.bestCar,

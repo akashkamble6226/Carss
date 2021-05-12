@@ -1,4 +1,5 @@
 import 'package:carss/controllers/car_detail_page_controller.dart';
+import 'package:carss/controllers/firebase_controller.dart';
 import 'package:carss/models/best_car_dummy_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,32 +15,78 @@ import 'login.dart';
 class HomePage extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
+  final CarDetailPageController carListController =
+      Get.put(CarDetailPageController());
+
+  final FirebaseController firebaseController = Get.put(FirebaseController());
+
   @override
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      key: scaffoldKey,
-      drawer: buildDrawer(context, deviceHeight, deviceWidth),
-      appBar: buildAppBar(context),
-      body: SingleChildScrollView(
-        child: Container(
+        key: scaffoldKey,
+        drawer: buildDrawer(context, deviceHeight, deviceWidth),
+        appBar: buildAppBar(context),
+        body: Container(
           width: deviceWidth,
           height: deviceHeight,
           color: Theme.of(context).primaryColor,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildSectionName(context, "Legendary Companies", true, false),
-              BuildLegendaryCompanies(),
-              buildSectionName(context, "Best Cars", false, true),
-              BuildBestCars(),
+          child: CustomScrollView(
+            slivers: [
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    buildSectionName(
+                        context, "Legendary Companies", true, false),
+                    BuildLegendaryCompanies(),
+                    buildSectionName(context, "Best Cars", false, true),
+                  ],
+                ),
+              ),
+
+              Obx(() {
+                return SliverGrid(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Get.to(() => CarDetails(
+                                bestCar: carListController.carList[index],
+                                index: index,
+                              ));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: FittedBox(
+                              fit: BoxFit.fitHeight,
+                              child: Hero(
+                                tag: carListController.carList[index],
+                                child: Image.asset(
+                                  bestCars[index].img,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    childCount: carListController.carList.length,
+                  ),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 6 / 5,
+                      crossAxisSpacing: 5,
+                      mainAxisSpacing: 5),
+                );
+              }),
+
+              // SliverGrid(delegate: delegate, gridDelegate: gridDelegate)
             ],
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   AppBar buildAppBar(BuildContext context) {
@@ -104,7 +151,12 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            ListTile(
+
+         
+
+              
+
+              ListTile(
               trailing: Icon(
                 Icons.login,
                 size: 25,
@@ -116,6 +168,34 @@ class HomePage extends StatelessWidget {
               ),
               onTap: () {
                 Get.to(LoginPage());
+                // Get.snackbar(
+                //   'Login',
+                //   'you can login',
+                //   snackPosition: SnackPosition.BOTTOM,
+                //   colorText: Colors.white,
+                //   backgroundColor: Theme.of(context).accentColor,
+                // );
+              },
+            
+        ),
+
+            
+            
+            Divider(
+              thickness: 1,
+              color: Theme.of(context).accentColor,
+            ),
+            ListTile(
+              trailing: Icon(
+                Icons.logout,
+                size: 25,
+                color: Colors.white,
+              ),
+              title: Text(
+                'Logout',
+                style: Theme.of(context).textTheme.headline3,
+              ),
+              onTap: () {
                 // Get.snackbar(
                 //   'Login',
                 //   'you can login',
@@ -149,31 +229,6 @@ class HomePage extends StatelessWidget {
                 // );
               },
             ),
-
-            Divider(
-              thickness: 1,
-              color: Theme.of(context).accentColor,
-            ),
-            ListTile(
-              trailing: Icon(
-                Icons.logout,
-                size: 25,
-                color: Colors.white,
-              ),
-              title: Text(
-                'Logout',
-                style: Theme.of(context).textTheme.headline3,
-              ),
-              onTap: () {
-                // Get.snackbar(
-                //   'Login',
-                //   'you can login',
-                //   snackPosition: SnackPosition.BOTTOM,
-                //   colorText: Colors.white,
-                //   backgroundColor: Theme.of(context).accentColor,
-                // );
-              },
-            ),
           ],
         ),
       ),
@@ -183,6 +238,7 @@ class HomePage extends StatelessWidget {
   Widget buildSectionName(
       BuildContext context, String title, bool fromTop, bool toBottom) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         fromTop
             ? Padding(
@@ -206,53 +262,6 @@ class HomePage extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 0),
               ),
       ],
-    );
-  }
-}
-
-class BuildBestCars extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final CarDetailPageController carListController =
-        Get.put(CarDetailPageController());
-
-    return Flexible(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
-        child: Obx(() {
-          return GridView.builder(
-            scrollDirection: Axis.vertical,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 6 / 5,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10),
-            itemCount: carListController.carList.length,
-            itemBuilder: (BuildContext ctx, index) {
-              return GestureDetector(
-                onTap: () {
-                  Get.to(() => CarDetails(
-                        bestCar: carListController.carList[index],
-                        index: index,
-                      ));
-                },
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Hero(
-                      tag: carListController.carList[index],
-                      child: Image.asset(
-                        bestCars[index].img,
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-          );
-        }),
-      ),
     );
   }
 }

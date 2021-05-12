@@ -9,6 +9,8 @@ class CarDetailPageController extends GetxController {
   //created list of BestCars object
   
   List carList = List<BestCar>.empty(growable: true).obs;
+
+ 
   //now adding data
 
   @override

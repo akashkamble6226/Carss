@@ -9,7 +9,7 @@ class FirebaseController extends GetxController {
 
   Rxn<User> firebaseUser = Rxn<User>();
 
- 
+  // RxBool loggedIn = false.obs;
 
   String get user => firebaseUser.value?.email;
 
@@ -18,6 +18,8 @@ class FirebaseController extends GetxController {
     // TODO: implement onInit
 
     firebaseUser.bindStream(_auth.authStateChanges());
+
+    // loggedIn = isUserLoggedIn() as RxBool;
     super.onInit();
   }
 
@@ -26,7 +28,7 @@ class FirebaseController extends GetxController {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
-      Get.to(() =>HomePage());
+      Get.to(() => HomePage());
     } catch (e) {
       Get.snackbar(
         'Error creating the account',
@@ -41,7 +43,7 @@ class FirebaseController extends GetxController {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
 
-      Get.to(() =>HomePage());
+      Get.to(() => HomePage());
     } catch (e) {
       Get.snackbar(
         'Error signing in the account',
@@ -55,10 +57,20 @@ class FirebaseController extends GetxController {
   void logout() async {
     try {
       await _auth.signOut();
-    } catch (e) {
-
-      
-    }
+    } catch (e) {}
     ;
   }
+
+//   bool isUserLoggedIn() {
+//     if (_auth.currentUser?.uid != null) {
+// //  logged
+//       // loggedIn = true.obs;
+
+//       return true;
+//     } else {
+// // not logged
+//       // loggedIn = false.obs;
+//        return false;
+//     }
+//   }
 }
