@@ -3,6 +3,7 @@ import '../models/comapany_data_model.dart';
 
 const companies = const [
   CompanyInfo(
+    
     companyName: "Lamborghini",
     companyLogo:"assets/images/lambo1.png" ,
     companyHeadquart: "Itely",

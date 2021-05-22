@@ -2,6 +2,7 @@ import '../models/best_cars.dart';
 
 var bestCars =  [
   BestCar(
+    id: 'car1',
     comapnyName: "Lamborghini",
     modelName: 'Aventedor',
     availableColors: {'1': '#7777ee', '2': '#00FF00', '3': '#FF0000'},
@@ -13,6 +14,7 @@ var bestCars =  [
   ),
 
   BestCar(
+    id: 'car2',
     comapnyName: "Bugatti",
     modelName: 'Veyron', 
     availableColors: {'1': '#7777ee', '2': '#00FF00', '3': '#FF0000'},
@@ -24,6 +26,7 @@ var bestCars =  [
   ),
 
   BestCar(
+     id: 'car3',
     comapnyName: "Porsche",
     modelName: 'Macan', 
     availableColors: {'1': '#7777ee', '2': '#00FF00', '3': '#FF0000'},
@@ -36,6 +39,7 @@ var bestCars =  [
   ),
 
   BestCar(
+    id: 'car4',
     comapnyName: "Audi",
     modelName: 'R8', 
     availableColors: {'1': '#7777ee', '2': '#00FF00', '3': '#FF0000'},
@@ -47,6 +51,7 @@ var bestCars =  [
   ),
 
   BestCar(
+    id:'car5',
     comapnyName: "Aston martine",
     modelName: 'DB11', 
     availableColors: {'1': '#7777ee', '2': '#00FF00', '3': '#FF0000'},

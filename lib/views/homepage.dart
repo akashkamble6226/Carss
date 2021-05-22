@@ -1,3 +1,4 @@
+import 'package:carss/Widgets/searchcars.dart';
 import 'package:carss/controllers/car_detail_page_controller.dart';
 import 'package:carss/controllers/firebase_controller.dart';
 import 'package:carss/models/best_car_dummy_data.dart';
@@ -12,13 +13,30 @@ import '../views/company_details.dart';
 import 'car_details.dart';
 import 'login.dart';
 
-class HomePage extends StatelessWidget {
+import './fevourite_cars.dart';
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+
+
+class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
   final CarDetailPageController carListController =
       Get.put(CarDetailPageController());
 
   final FirebaseController firebaseController = Get.put(FirebaseController());
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +69,9 @@ class HomePage extends StatelessWidget {
                     (context, index) {
                       return GestureDetector(
                         onTap: () {
+                          print(index);
                           Get.to(() => CarDetails(
-                                bestCar: carListController.carList[index],
-                                index: index,
+                                id: carListController.carList[index].id,
                               ));
                         },
                         child: Padding(
@@ -91,6 +109,7 @@ class HomePage extends StatelessWidget {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
+      
       centerTitle: true,
       backgroundColor: Theme.of(context).accentColor,
       leading: GestureDetector(
@@ -105,10 +124,19 @@ class HomePage extends StatelessWidget {
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 10),
-          child: Icon(
-            Icons.search,
-            color: Colors.white,
-            size: 22,
+          child: IconButton(
+            icon: Icon(
+              Icons.search,
+              color: Colors.white,
+              size: 22,
+            ),
+            onPressed: () {
+              //search logic
+              showSearch(
+                context: context,
+                delegate: SearchCar(cars: carListController.carList),
+              );
+            },
           ),
         ),
       ],
@@ -151,40 +179,6 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-
-         
-
-              
-
-              ListTile(
-              trailing: Icon(
-                Icons.login,
-                size: 25,
-                color: Colors.white,
-              ),
-              title: Text(
-                'Login',
-                style: Theme.of(context).textTheme.headline3,
-              ),
-              onTap: () {
-                Get.to(LoginPage());
-                // Get.snackbar(
-                //   'Login',
-                //   'you can login',
-                //   snackPosition: SnackPosition.BOTTOM,
-                //   colorText: Colors.white,
-                //   backgroundColor: Theme.of(context).accentColor,
-                // );
-              },
-            
-        ),
-
-            
-            
-            Divider(
-              thickness: 1,
-              color: Theme.of(context).accentColor,
-            ),
             ListTile(
               trailing: Icon(
                 Icons.logout,
@@ -196,13 +190,8 @@ class HomePage extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline3,
               ),
               onTap: () {
-                // Get.snackbar(
-                //   'Login',
-                //   'you can login',
-                //   snackPosition: SnackPosition.BOTTOM,
-                //   colorText: Colors.white,
-                //   backgroundColor: Theme.of(context).accentColor,
-                // );
+                // controller.loggedIn.value = ! controller.loggedIn.value;
+                firebaseController.logout();
               },
             ),
             Divider(
@@ -220,13 +209,7 @@ class HomePage extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline3,
               ),
               onTap: () {
-                // Get.snackbar(
-                //   'Login',
-                //   'you can login',
-                //   snackPosition: SnackPosition.BOTTOM,
-                //   colorText: Colors.white,
-                //   backgroundColor: Theme.of(context).accentColor,
-                // );
+                Get.to(() => FevouritCars());
               },
             ),
           ],
@@ -341,6 +324,9 @@ class BuildLegendaryCompanies extends StatelessWidget {
                     ),
                     Text(
                       company.companyName,
+                      softWrap: true,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.headline3,
                     ),
                     SizedBox(

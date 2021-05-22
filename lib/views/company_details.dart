@@ -132,12 +132,16 @@ class ComapnyDetailsPage extends StatelessWidget {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
+      iconTheme: IconThemeData(
+    color: Colors.white, //change your color here
+  ),
+      
       backgroundColor: Theme.of(context).accentColor,
-      leading: Icon(
-        Icons.menu,
-        size: 22,
-        color: Colors.white,
-      ),
+      // leading: Icon(
+      //   Icons.menu,
+      //   size: 22,
+      //   color: Colors.white,
+      // ),
       title: Text(
         companyInfo.companyName,
         style: Theme.of(context).textTheme.headline1,

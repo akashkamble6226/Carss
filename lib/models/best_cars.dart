@@ -12,6 +12,7 @@
 import 'package:flutter/foundation.dart';
 
 class BestCar with ChangeNotifier{
+  final String id;
   final String comapnyName;
   final String modelName;
   final Map<String, String> availableColors;
@@ -22,13 +23,14 @@ class BestCar with ChangeNotifier{
   final String nearbyStore;
 
   BestCar({
-    this.approxCost,
-    this.availableColors,
-    this.comapnyName,
-    this.isFev,
-    this.modelName,
-    this.specifications,
-    this.img,
+    @required this.id,
+     @required this.approxCost,
+     @required this.availableColors,
+     @required this.comapnyName,
+     @required this.isFev,
+     @required this.modelName,
+     @required this.specifications,
+     @required this.img,
     this.nearbyStore,
   });
 

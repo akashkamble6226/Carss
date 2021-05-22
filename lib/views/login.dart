@@ -1,10 +1,12 @@
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 import '../controllers/firebase_controller.dart';
 import '../views/register.dart';
+import '../Widgets/curvepainter.dart';
 
 class LoginPage extends GetWidget<FirebaseController> {
-
   final TextEditingController emailtextEditingController =
       TextEditingController();
   final TextEditingController passwordtextEditingController =
@@ -12,113 +14,191 @@ class LoginPage extends GetWidget<FirebaseController> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('Login Here',
-                      style: Theme.of(context).textTheme.headline2),
-                  SizedBox(
-                    height: 50,
+      backgroundColor: HexColor('#FFD1D1'),
+      body: ColorfulSafeArea(
+        color: Theme.of(context).primaryColor,
+        child: SingleChildScrollView(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Stack(
+              children: [
+                ClipPath(
+                  clipper: CurvePainter(),
+                  child: Container(
+                    color: Theme.of(context).accentColor,
+                    width: size.width,
+                    height: size.height * 0.4,
                   ),
+
+                  // size: Size(200, 100),
+                ),
+                Positioned(
+                  top: size.height / 8,
+                  right: 35,
+                  child: Image.asset('assets/images/caronly.png'),
+                  width: 50,
+                  height: 50,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Positioned(
+                  top: size.height / 5,
+                  right: 10,
+                  child: Text(
+                    'Login Here',
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+            // SizedBox(
+            //   height: 50,
+            // ),
+
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                children: [
                   buildTextField(
                       'Enter Your Email', context, emailtextEditingController),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
-                  buildTextField(
-                      'Mobile Number', context, passwordtextEditingController),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Text(
-                    'Forgot Password ?',
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
+                  buildTextField('Enter Mobile Number', context,
+                      passwordtextEditingController),
                   SizedBox(
                     height: 10,
                   ),
-                  buildButton('Login', context, emailtextEditingController,
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Text(
+                      'Forgot Password ?',
+                      style: TextStyle(
+                          fontSize: 14.0,
+                          color: Theme.of(context).primaryColor),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  buildButton(context, emailtextEditingController,
                       passwordtextEditingController),
                   SizedBox(
                     height: 10,
                   ),
                   GestureDetector(
-                    onTap: (){
-                      Get.to(() =>Register());
+                    onTap: () {
+                      Get.to(() => Register());
                     },
-                                      child: Text(
+                    child: Text(
                       'Don\'t have an account ? Click to Register.',
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: TextStyle(
+                          fontSize: 14.0,
+                          color: Theme.of(context).primaryColor),
                     ),
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
+            )
+          ],
+        )),
       ),
     );
   }
 
   Widget buildTextField(
       String inputType, dynamic context, TextEditingController controllerName) {
-    return TextField(
-      controller: controllerName,
-      style: Theme.of(context).textTheme.headline5,
-      decoration: new InputDecoration(
-        labelStyle: Theme.of(context).textTheme.headline5,
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white, width: 1.0),
+    return Container(
+      height: 60,
+      child: TextField(
+        obscureText: inputType == "Enter Mobile Number" ? true : false,
+        keyboardType: inputType == "Enter Mobile Number"
+            ? TextInputType.number
+            : TextInputType.text,
+        autocorrect: true,
+
+        cursorColor: Theme.of(context).primaryColor,
+        controller: controllerName,
+        // : Theme.of(context).textTheme.headline5
+        style: TextStyle(
+          color: Theme.of(context).primaryColor,
+          fontSize: 18.0,
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white, width: 1.0),
+
+        decoration: new InputDecoration(
+          labelStyle: Theme.of(context).textTheme.headline5,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(60)),
+            borderSide:
+                BorderSide(color: Theme.of(context).primaryColor, width: 1.0),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(60)),
+            borderSide:
+                BorderSide(color: Theme.of(context).primaryColor, width: 1.0),
+          ),
+          hintText: inputType,
+          hintStyle: TextStyle(color: Theme.of(context).primaryColor),
         ),
-        hintText: inputType,
-        hintStyle: TextStyle(color: Colors.white),
       ),
     );
   }
+  //
 
-  Widget buildButton(
-      String buttonName,
-      dynamic context,
-      TextEditingController emailcontrollerName,
+  Widget buildButton(dynamic context, TextEditingController emailcontrollerName,
       TextEditingController passwordcontrollerName) {
-    return GestureDetector(
-      onTap: () {
-        print(emailcontrollerName.text);
-        print(passwordcontrollerName.text);
-
-          if(buttonName == 'Login')
-          {
-              controller.login(emailcontrollerName.text, passwordcontrollerName.text);
-          }
-
-          if(buttonName == 'Register')
-          {
-            controller.createUser(emailcontrollerName.text, passwordcontrollerName.text);
-          }
-
-           if(buttonName == 'Logout')
-          {
-            controller.logout();
-          }
-        
-      },
-      child: Container(
-        width: double.infinity,
-        height: 50,
-        decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
+    return SizedBox(
+      height: 60,
+      width: MediaQuery.of(context).size.width / 2,
+      child: TextButton(
+        child: Text(
+          'Login',
+          style: Theme.of(context).textTheme.headline5,
         ),
+        style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all(Theme.of(context).accentColor),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(60),
+            ))),
+        onPressed: () {
+          if (emailcontrollerName.text.isEmpty) {
+            Get.snackbar(
+              'Please enter email',
+              'Email can\'t be empty',
+              snackPosition: SnackPosition.BOTTOM,
+            );
+          } else if (passwordcontrollerName.text.isEmpty) {
+            Get.snackbar(
+              'Please enter phone number',
+              'Phone number can\'t be empty',
+              snackPosition: SnackPosition.BOTTOM,
+            );
+          } else {
+            controller.login(
+                emailcontrollerName.text, passwordcontrollerName.text);
+          }
+        },
+      ),
+    );
+  }
+}
+
+/*
+Container(
+        width: MediaQuery.of(context).size.width / 2,
+        height: 60,
+        decoration: BoxDecoration(
+            color: Theme.of(context).accentColor,
+            borderRadius: BorderRadius.circular(60)),
         child: Center(
           child: Text(
             buttonName,
@@ -126,6 +206,4 @@ class LoginPage extends GetWidget<FirebaseController> {
           ),
         ),
       ),
-    );
-  }
-}
+ */
