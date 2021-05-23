@@ -1,4 +1,4 @@
-import 'package:auto_size_text/auto_size_text.dart';
+
 import 'package:carss/Widgets/searchcars.dart';
 import 'package:carss/controllers/car_detail_page_controller.dart';
 import 'package:carss/controllers/firebase_controller.dart';
@@ -27,6 +27,8 @@ class _HomePageState extends State<HomePage> {
       Get.put(CarDetailPageController());
 
   final FirebaseController firebaseController = Get.put(FirebaseController());
+
+ 
 
   @override
   void initState() {
@@ -187,6 +189,7 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 // controller.loggedIn.value = ! controller.loggedIn.value;
                 firebaseController.logout();
+                
               },
             ),
             Divider(

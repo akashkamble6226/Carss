@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import '../controllers/firebase_controller.dart';
 import '../views/register.dart';
+import 'package:carss/controllers/firebase_controller.dart';
 import '../Widgets/curvepainter.dart';
 
 class LoginPage extends GetWidget<FirebaseController> {
@@ -12,105 +13,125 @@ class LoginPage extends GetWidget<FirebaseController> {
   final TextEditingController passwordtextEditingController =
       TextEditingController();
 
+  //final FirebaseController firebaseController = Get.put(FirebaseController());
+
+  // void turnOnLoader()
+  // {
+
+  //   controller.isLoading = true.obs;
+
+  // }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: HexColor('#FFD1D1'),
-      body: ColorfulSafeArea(
-        color: Theme.of(context).primaryColor,
-        child: SingleChildScrollView(
+        backgroundColor: HexColor('#FFD1D1'),
+        body: ColorfulSafeArea(
+          color: Theme.of(context).primaryColor,
+          child: SingleChildScrollView(
             child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Stack(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ClipPath(
-                  clipper: CurvePainter(),
-                  child: Container(
-                    color: Theme.of(context).accentColor,
-                    width: size.width,
-                    height: size.height * 0.4,
-                  ),
+                Stack(
+                  children: [
+                    ClipPath(
+                      clipper: CurvePainter(),
+                      child: Container(
+                        color: Theme.of(context).accentColor,
+                        width: size.width,
+                        height: size.height * 0.4,
+                      ),
 
-                  // size: Size(200, 100),
+                      // size: Size(200, 100),
+                    ),
+                    Positioned(
+                      top: 50,
+                      right: 35,
+                      child: Image.asset('assets/images/caronly.png'),
+                      width: 50,
+                      height: 50,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Positioned(
+                      top: size.height / 5,
+                      right: 10,
+                      child: Text(
+                        'Login Here',
+                        style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
+                  ],
                 ),
-                Positioned(
-                  top: 50,
-                  right: 35,
-                  child: Image.asset('assets/images/caronly.png'),
-                  width: 50,
-                  height: 50,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Positioned(
-                  top: size.height / 5,
-                  right: 10,
-                  child: Text(
-                    'Login Here',
-                    style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                // SizedBox(
+                //   height: 50,
+                // ),
+
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      buildTextField('Enter Your Email', context,
+                          emailtextEditingController),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      buildTextField('Enter Mobile Number', context,
+                          passwordtextEditingController),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Text(
+                          'Forgot Password ?',
+                          style: TextStyle(
+                              fontSize: 14.0,
+                              color: Theme.of(context).primaryColor),
+                        ),
+                      ),
+                      GetBuilder<FirebaseController>(
+                          init: FirebaseController(),
+                          builder: (controller) {
+                            return controller.isLoading.value
+                                ? Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : SizedBox(
+                                    height: 5,
+                                  );
+                          }),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      buildButton(context, emailtextEditingController,
+                          passwordtextEditingController),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => Register());
+                        },
+                        child: Text(
+                          'Don\'t have an account ? Click to Register.',
+                          style: TextStyle(
+                              fontSize: 14.0,
+                              color: Theme.of(context).primaryColor),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
+                )
               ],
             ),
-            // SizedBox(
-            //   height: 50,
-            // ),
-
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  buildTextField(
-                      'Enter Your Email', context, emailtextEditingController),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  buildTextField('Enter Mobile Number', context,
-                      passwordtextEditingController),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Text(
-                      'Forgot Password ?',
-                      style: TextStyle(
-                          fontSize: 14.0,
-                          color: Theme.of(context).primaryColor),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  buildButton(context, emailtextEditingController,
-                      passwordtextEditingController),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.to(() => Register());
-                    },
-                    child: Text(
-                      'Don\'t have an account ? Click to Register.',
-                      style: TextStyle(
-                          fontSize: 14.0,
-                          color: Theme.of(context).primaryColor),
-                    ),
-                  ),
-                ],
-              ),
-            )
-          ],
-        )),
-      ),
-    );
+          ),
+        ));
   }
 
   Widget buildTextField(
@@ -183,6 +204,8 @@ class LoginPage extends GetWidget<FirebaseController> {
               snackPosition: SnackPosition.BOTTOM,
             );
           } else {
+            controller.turnOnLoader(true);
+
             controller.login(
                 emailcontrollerName.text, passwordcontrollerName.text);
           }
@@ -191,19 +214,3 @@ class LoginPage extends GetWidget<FirebaseController> {
     );
   }
 }
-
-/*
-Container(
-        width: MediaQuery.of(context).size.width / 2,
-        height: 60,
-        decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
-            borderRadius: BorderRadius.circular(60)),
-        child: Center(
-          child: Text(
-            buttonName,
-            style: Theme.of(context).textTheme.headline4,
-          ),
-        ),
-      ),
- */

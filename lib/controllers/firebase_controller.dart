@@ -1,11 +1,10 @@
 import 'package:carss/views/login.dart';
-import 'package:flutter/cupertino.dart';
+
 
 import '../views/homepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 
 class FirebaseController extends GetxController {
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -13,6 +12,7 @@ class FirebaseController extends GetxController {
   Rxn<User> firebaseUser = Rxn<User>();
 
   RxBool loggedIn = false.obs;
+  RxBool isLoading = false.obs;
 
   String get user => firebaseUser.value?.email;
 
@@ -21,8 +21,6 @@ class FirebaseController extends GetxController {
     // TODO: implement onInit
 
     firebaseUser.bindStream(_auth.authStateChanges());
-
-    // loggedIn = isUserLoggedIn() as RxBool;
 
     isUserLoggedIn();
     super.onInit();
@@ -50,9 +48,13 @@ class FirebaseController extends GetxController {
       // Get.rawSnackbar(title:"Loading",message: 'Loading your accont');
      
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password) ;
+     
+      await _auth.signInWithEmailAndPassword(email: email, password: password).whenComplete(() {isLoading = true.obs;}) ;
+
+      
 
       Get.to(() => HomePage());
+
 
 
 
@@ -70,6 +72,7 @@ class FirebaseController extends GetxController {
 
   void logout() async {
     try {
+      turnOnLoader(false);
       await _auth.signOut();
 
       Get.offAll(() => LoginPage());
@@ -95,5 +98,19 @@ class FirebaseController extends GetxController {
       loggedIn = false.obs;
     
     }
+  }
+
+  void turnOnLoader(bool isLoggingIn)
+  {
+    
+    if(isLoggingIn)
+    {
+      isLoading = true.obs;
+    }
+    else
+    {
+      isLoading = false.obs;
+    }
+    update();
   }
 }
