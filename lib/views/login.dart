@@ -204,7 +204,7 @@ class LoginPage extends GetWidget<FirebaseController> {
               snackPosition: SnackPosition.BOTTOM,
             );
           } else {
-            controller.turnOnLoader(true);
+            
 
             controller.login(
                 emailcontrollerName.text, passwordcontrollerName.text);
