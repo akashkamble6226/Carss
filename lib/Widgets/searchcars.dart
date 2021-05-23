@@ -104,12 +104,12 @@ class SearchCar extends SearchDelegate {
       accentColor: Theme.of(context).accentColor,
       textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.white),
       inputDecorationTheme: InputDecorationTheme(
-        hintStyle: TextStyle(color: Colors.white, fontSize: 20),
+        hintStyle: TextStyle(color: Colors.white, fontSize: 16),
       ),
       textTheme: TextTheme(
         headline6: TextStyle(
           color: Colors.white,
-          fontSize: 20.0,
+          fontSize: 16.0,
         ),
       ),
     );

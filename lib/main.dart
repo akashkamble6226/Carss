@@ -54,9 +54,9 @@ class _MyAppState extends State<MyApp> {
         ),
         textTheme: TextTheme(
           headline1: TextStyle(
-              fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.white),
+              fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.white),
           headline2: TextStyle(
-              fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white),
+              fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.white),
           headline3: TextStyle(
               fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.white),
           headline4: TextStyle(fontSize: 14.0, color: Colors.white),

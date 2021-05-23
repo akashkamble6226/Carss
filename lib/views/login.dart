@@ -36,7 +36,7 @@ class LoginPage extends GetWidget<FirebaseController> {
                   // size: Size(200, 100),
                 ),
                 Positioned(
-                  top: size.height / 8,
+                  top: 50,
                   right: 35,
                   child: Image.asset('assets/images/caronly.png'),
                   width: 50,
@@ -51,7 +51,7 @@ class LoginPage extends GetWidget<FirebaseController> {
                   child: Text(
                     'Login Here',
                     style: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
@@ -129,13 +129,13 @@ class LoginPage extends GetWidget<FirebaseController> {
         // : Theme.of(context).textTheme.headline5
         style: TextStyle(
           color: Theme.of(context).primaryColor,
-          fontSize: 18.0,
+          fontSize: 16.0,
         ),
 
         decoration: new InputDecoration(
           labelStyle: Theme.of(context).textTheme.headline5,
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(60)),
+            borderRadius: BorderRadius.all(Radius.circular(50)),
             borderSide:
                 BorderSide(color: Theme.of(context).primaryColor, width: 1.0),
           ),
@@ -155,7 +155,7 @@ class LoginPage extends GetWidget<FirebaseController> {
   Widget buildButton(dynamic context, TextEditingController emailcontrollerName,
       TextEditingController passwordcontrollerName) {
     return SizedBox(
-      height: 60,
+      height: 50,
       width: MediaQuery.of(context).size.width / 2,
       child: TextButton(
         child: Text(
@@ -167,7 +167,7 @@ class LoginPage extends GetWidget<FirebaseController> {
                 MaterialStateProperty.all(Theme.of(context).accentColor),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(60),
+              borderRadius: BorderRadius.circular(50),
             ))),
         onPressed: () {
           if (emailcontrollerName.text.isEmpty) {

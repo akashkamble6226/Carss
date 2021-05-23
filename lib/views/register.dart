@@ -40,7 +40,7 @@ class Register extends GetWidget<FirebaseController> {
                     ),
 
                       Positioned(
-                      top: size.height / 8,
+                      top: 50,
                       right: 45,
                       child: Image.asset('assets/images/caronly.png'),
                       width: 50,
@@ -53,7 +53,7 @@ class Register extends GetWidget<FirebaseController> {
                       child: Text(
                         'Register Here',
                         style: TextStyle(
-                            fontSize: 20.0,
+                            fontSize: 16.0,
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
                       ),
@@ -118,7 +118,7 @@ class Register extends GetWidget<FirebaseController> {
         // : Theme.of(context).textTheme.headline5
         style: TextStyle(
           color: Theme.of(context).primaryColor,
-          fontSize: 18.0,
+          fontSize: 16.0,
         ),
 
         decoration: new InputDecoration(
@@ -145,7 +145,7 @@ class Register extends GetWidget<FirebaseController> {
   Widget buildButton(dynamic context, TextEditingController emailcontrollerName,
       TextEditingController passwordcontrollerName) {
     return SizedBox(
-      height: 60,
+      height: 50,
       width: MediaQuery.of(context).size.width / 2,
       child: TextButton(
         child: Text(
@@ -157,7 +157,7 @@ class Register extends GetWidget<FirebaseController> {
                 MaterialStateProperty.all(Theme.of(context).accentColor),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(60),
+              borderRadius: BorderRadius.circular(50),
             ))),
         onPressed: () {
           controller.createUser(

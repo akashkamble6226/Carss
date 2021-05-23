@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carss/Widgets/searchcars.dart';
 import 'package:carss/controllers/car_detail_page_controller.dart';
 import 'package:carss/controllers/firebase_controller.dart';
@@ -11,7 +12,6 @@ import '../models/company_dummy_data.dart';
 
 import '../views/company_details.dart';
 import 'car_details.dart';
-import 'login.dart';
 
 import './fevourite_cars.dart';
 
@@ -19,8 +19,6 @@ class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
-
-
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -30,12 +28,10 @@ class _HomePageState extends State<HomePage> {
 
   final FirebaseController firebaseController = Get.put(FirebaseController());
 
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    
   }
 
   @override
@@ -109,7 +105,6 @@ class _HomePageState extends State<HomePage> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      
       centerTitle: true,
       backgroundColor: Theme.of(context).accentColor,
       leading: GestureDetector(
@@ -324,18 +319,23 @@ class BuildLegendaryCompanies extends StatelessWidget {
                     ),
                     Text(
                       company.companyName,
-                      softWrap: true,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.headline3,
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    Text(
-                      "Founder: " + company.founderName,
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
+                  Text(
+                            "Founder: " + company.founderName,
+                            
+                            style: TextStyle(color: Colors.white,fontSize: 12),
+                            
+                            maxLines: 1,
+                            softWrap: false,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                      
+                    
+                   
                     SizedBox(
                       height: 10,
                     ),
@@ -360,7 +360,7 @@ class BuildLegendaryCompanies extends StatelessWidget {
                             Text(
                               company.companyHeadquart,
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 15),
+                                  TextStyle(color: Colors.white, fontSize: 14),
                             ),
                           ],
                         ),
@@ -385,7 +385,7 @@ class BuildLegendaryCompanies extends StatelessWidget {
                               Text(
                                 "Store",
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 15),
+                                    color: Colors.white, fontSize: 14),
                               ),
                             ],
                           ),
